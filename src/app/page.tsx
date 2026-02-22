@@ -23,10 +23,25 @@ const SECTIONS = [
 export default function Home() {
   const [currentSection, setCurrentSection] = useState(0);
   const [isScrolling, setIsScrolling] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const touchStartY = useRef(0);
   const { handleLogoClick, handleLetterClick, visualFeedback, currentLetterIndex } = useAdminPuzzle();
 
   useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    // Initial check
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) return; // Disable custom scrolling on mobile
+
     const handleWheel = (e: WheelEvent) => {
       // Prevent creating a new scroll if already scrolling
       if (isScrolling) return;
@@ -86,7 +101,7 @@ export default function Home() {
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchend", handleTouchEnd);
     };
-  }, [currentSection, isScrolling]);
+  }, [currentSection, isScrolling, isMobile]);
 
   const scrollToHero = (e?: React.MouseEvent) => {
     if (e) {
@@ -101,25 +116,39 @@ export default function Home() {
       <main className={styles.snapContainer}>
         <Navbar currentSection={currentSection} onLogoClick={scrollToHero} />
 
-        <motion.div
-          animate={{ y: `-${currentSection * 100}vh` }}
-          transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }} // Custom Bezier for smooth "slower" feel
-          style={{ width: "100%", height: "100%" }}
-        >
-          {SECTIONS.map((Component, index) => (
-            <section key={index} className={styles.sectionWrapper}>
-              {index === 0 ? (
-                <Hero onLetterClick={handleLetterClick} visualFeedback={visualFeedback} currentLetterIndex={currentLetterIndex} />
-              ) : (
-                <Component />
-              )}
-            </section>
-          ))}
-        </motion.div>
-        
+        {isMobile ? (
+          <div style={{ width: "100%" }}>
+            {SECTIONS.map((Component, index) => (
+              <section key={index} className={styles.sectionWrapperMob}>
+                {index === 0 ? (
+                  <Hero onLetterClick={handleLetterClick} visualFeedback={visualFeedback} currentLetterIndex={currentLetterIndex} />
+                ) : (
+                  <Component />
+                )}
+              </section>
+            ))}
+          </div>
+        ) : (
+          <motion.div
+            animate={{ y: `-${currentSection * 100}vh` }}
+            transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }} // Custom Bezier for smooth "slower" feel
+            style={{ width: "100%", height: "100%" }}
+          >
+            {SECTIONS.map((Component, index) => (
+              <section key={index} className={styles.sectionWrapper}>
+                {index === 0 ? (
+                  <Hero onLetterClick={handleLetterClick} visualFeedback={visualFeedback} currentLetterIndex={currentLetterIndex} />
+                ) : (
+                  <Component />
+                )}
+              </section>
+            ))}
+          </motion.div>
+        )}
+
         {/* Visual feedback overlays */}
         {visualFeedback?.type === 'corner' && (
-          <div 
+          <div
             className={styles.cornerFeedback}
             style={{
               position: 'fixed',

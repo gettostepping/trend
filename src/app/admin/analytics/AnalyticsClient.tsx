@@ -1490,7 +1490,7 @@ export default function AnalyticsClient({ initialData }: AnalyticsClientProps) {
                                             >Distribution</button>
                                         </div>
                                     </div>
-                                    <div style={{ padding: '1.5rem 1rem' }}>
+                                    <div className={styles.chartContainer} style={{ padding: '1.5rem 1rem', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                                         {/* LCP Distribution */}
                                         <div style={{ marginBottom: '1.5rem' }}>
                                             <div style={{ fontSize: '0.875rem', marginBottom: '0.5rem', color: '#fff' }}>LCP</div>
