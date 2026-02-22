@@ -13,11 +13,11 @@ function GmailSetupContent() {
     useEffect(() => {
         const token = searchParams.get('refresh_token');
         const errorParam = searchParams.get('error');
-        
+
         if (token) {
             setRefreshToken(token);
         }
-        
+
         if (errorParam) {
             setError(decodeURIComponent(errorParam));
         }
@@ -79,7 +79,7 @@ function GmailSetupContent() {
                             <code className={styles.token}>
                                 GMAIL_REFRESH_TOKEN={refreshToken}
                             </code>
-                            <button 
+                            <button
                                 onClick={handleCopyToken}
                                 className={styles.copyButton}
                             >
@@ -89,10 +89,10 @@ function GmailSetupContent() {
                         <div className={styles.envExample}>
                             <p><strong>Your .env.local should include:</strong></p>
                             <pre>
-{`GMAIL_CLIENT_ID=1012781705604-p8t6ucvv8sgrnvt1eh0g4jcnl9aik7v9.apps.googleusercontent.com
-GMAIL_CLIENT_SECRET=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
+                                {`GMAIL_CLIENT_ID=${process.env.NEXT_PUBLIC_GMAIL_CLIENT_ID || 'your-client-id'}
+GMAIL_CLIENT_SECRET=${process.env.NEXT_PUBLIC_GMAIL_CLIENT_SECRET || 'your-client-secret'}
 GMAIL_REFRESH_TOKEN=${refreshToken}
-GMAIL_USER=your-email@trendsignite.com`}
+GMAIL_USER=${process.env.NEXT_PUBLIC_GMAIL_USER || 'your-email@trendsignite.com'}`}
                             </pre>
                         </div>
                         <div className={styles.successBox}>
