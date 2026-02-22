@@ -1,0 +1,326 @@
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    z-index: 1999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dateRangePicker {
+    position: relative;
+    background: #1a1a1a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.75rem;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+    width: 90%;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh;
+    overflow: hidden;
+}
+
+.pickerHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.pickerTitle {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+}
+
+.closeButton {
+    background: transparent;
+    border: none;
+    color: #999;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+}
+
+.closeButton:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.pickerContent {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.quickSelect {
+    width: 200px;
+    padding: 1.5rem;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    overflow-y: auto;
+}
+
+.quickSelectTitle {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+}
+
+.quickSelectOptions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.quickSelectOptions button {
+    background: transparent;
+    border: none;
+    color: #ccc;
+    text-align: left;
+    padding: 0.75rem;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.875rem;
+}
+
+.quickSelectOptions button:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+}
+
+.calendarSection {
+    flex: 1;
+    padding: 1.5rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.dateRangeDisplay {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.5rem;
+}
+
+.datePill {
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 0.375rem;
+    color: #fff;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.dateArrow {
+    color: #999;
+    font-size: 0.875rem;
+}
+
+.dateDuration {
+    margin-left: auto;
+    color: #1A73E8;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.calendarsContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.calendar {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.calendarHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.navButton {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.375rem;
+    color: #ccc;
+    cursor: pointer;
+    padding: 0.5rem;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.navButton:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.monthTitle {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+}
+
+.dayHeaders {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.dayHeader {
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #999;
+    padding: 0.5rem;
+}
+
+.daysGrid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.25rem;
+}
+
+.dayCell {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+    color: #ccc;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.dayCell:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.dayCell.today {
+    color: #1A73E8;
+    font-weight: 700;
+}
+
+.dayCell.selected {
+    background: #1A73E8;
+    color: #fff;
+    font-weight: 700;
+}
+
+.dayCell.inRange {
+    background: rgba(26, 115, 232, 0.2);
+    color: #fff;
+}
+
+.dayCell.startDate {
+    background: #1A73E8;
+    color: #fff;
+    font-weight: 700;
+    border-top-left-radius: 0.375rem;
+    border-bottom-left-radius: 0.375rem;
+}
+
+.dayCell.endDate {
+    background: #1A73E8;
+    color: #fff;
+    font-weight: 700;
+    border-top-right-radius: 0.375rem;
+    border-bottom-right-radius: 0.375rem;
+}
+
+.pickerFooter {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.cancelButton,
+.applyButton {
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.cancelButton {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ccc;
+}
+
+.cancelButton:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.applyButton {
+    background: #1A73E8;
+    color: #fff;
+}
+
+.applyButton:hover:not(:disabled) {
+    background: #1557b0;
+}
+
+.applyButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+    .calendarsContainer {
+        grid-template-columns: 1fr;
+    }
+    
+    .pickerContent {
+        flex-direction: column;
+    }
+    
+    .quickSelect {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+}

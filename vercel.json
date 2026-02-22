@@ -1,0 +1,16 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/analytics-daily-summary",
+      "schedule": "0 1 * * *"
+    },
+    {
+      "path": "/api/cron/analytics-cleanup",
+      "schedule": "0 2 * * *"
+    },
+    {
+      "path": "/api/cron/analytics-full-wipe",
+      "schedule": "0 3 * * 0"
+    }
+  ]
+}

@@ -1,0 +1,156 @@
+.container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: #0a0a0a;
+}
+
+.card {
+    background: #1a1a1a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.75rem;
+    padding: 2rem;
+    max-width: 600px;
+    width: 100%;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.5rem;
+}
+
+.description {
+    color: #999;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.errorBox {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    color: #fca5a5;
+}
+
+.errorHint {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: #fca5a5;
+}
+
+.stepContainer {
+    margin-bottom: 2rem;
+}
+
+.stepTitle {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 0.75rem;
+}
+
+.stepDescription {
+    color: #ccc;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.authButton {
+    background: #1A73E8;
+    color: #fff;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.authButton:hover {
+    background: #1557b0;
+}
+
+.tokenBox {
+    background: #0a0a0a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+}
+
+.token {
+    color: #4ade80;
+    font-size: 0.875rem;
+    word-break: break-all;
+    flex: 1;
+    font-family: 'Courier New', monospace;
+}
+
+.copyButton {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.375rem;
+    padding: 0.5rem 1rem;
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.copyButton:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.envExample {
+    background: #0a0a0a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.envExample p {
+    color: #ccc;
+    margin-bottom: 0.75rem;
+    font-size: 0.875rem;
+}
+
+.envExample pre {
+    color: #4ade80;
+    font-size: 0.75rem;
+    line-height: 1.8;
+    font-family: 'Courier New', monospace;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.successBox {
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    color: #86efac;
+}
+
+.successBox p {
+    margin-bottom: 0.5rem;
+}
+
+.note {
+    font-size: 0.875rem;
+    color: #86efac;
+    opacity: 0.8;
+}

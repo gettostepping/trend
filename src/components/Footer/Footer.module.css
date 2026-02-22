@@ -1,0 +1,38 @@
+.footer {
+    padding: 4rem 2rem;
+    background: #111;
+    color: white;
+    text-align: center;
+}
+
+.content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.05em;
+}
+
+.links {
+    display: flex;
+    gap: 2rem;
+    opacity: 0.8;
+}
+
+.link:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
+}
+
+.copyright {
+    margin-top: 2rem;
+    opacity: 0.4;
+    font-size: 0.875rem;
+}

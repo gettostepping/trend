@@ -1,0 +1,191 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.fadeOut {
+    animation: fadeOut 1s ease-out forwards;
+    pointer-events: none;
+}
+
+.fadeOut .logoContainer {
+    animation: logoExit 1s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards;
+}
+
+.fadeOut .ambientGlow {
+    animation: glowExit 1s ease-out forwards;
+}
+
+/* Ambient rotating glow effect */
+.ambientGlow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(ellipse at 20% 30%, rgba(26, 115, 232, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 70%, rgba(147, 197, 253, 0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(26, 115, 232, 0.08) 0%, transparent 60%);
+    animation: ambientPulse 8s ease-in-out infinite;
+    pointer-events: none;
+}
+
+/* Logo container */
+.logoContainer {
+    position: relative;
+    animation: logoEntrance 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Pulsing glow behind logo */
+.logoGlow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(26, 115, 232, 0.4) 0%, transparent 70%);
+    filter: blur(60px);
+    animation: pulse 3s ease-in-out infinite;
+    pointer-events: none;
+}
+
+/* Logo image */
+.logo {
+    position: relative;
+    z-index: 1;
+    width: 300px;
+    height: auto;
+    filter: drop-shadow(0 0 30px rgba(26, 115, 232, 0.5));
+    animation: logoAnticipate 2.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes logoExit {
+    0% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+        filter: blur(0px);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(0) rotate(720deg);
+        filter: blur(20px);
+    }
+}
+
+@keyframes logoAnticipate {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+
+    100% {
+        transform: rotate(-15deg) scale(0.95);
+    }
+}
+
+@keyframes glowExit {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(3);
+    }
+}
+
+@keyframes logoEntrance {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 0.6;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+}
+
+@keyframes ambientPulse {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: scale(1.05) rotate(5deg);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .logo {
+        width: 200px;
+    }
+
+    .logoGlow {
+        width: 300px;
+        height: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        width: 150px;
+    }
+
+    .logoGlow {
+        width: 250px;
+        height: 250px;
+    }
+}

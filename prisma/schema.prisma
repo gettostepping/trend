@@ -1,0 +1,222 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id           String   @id @default(cuid())
+  username     String   @unique
+  passwordHash String?
+  authCode     String?  @unique // For initial setup
+  isActive     Boolean  @default(true)
+  isSuperAdmin Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  lastSeenAt         DateTime? // Updated on login and every heartbeat (presence tracking)
+  emailsLastViewedAt DateTime? // Updated ONLY when admin opens the emails page
+  
+  // Relations
+  assignedTickets Ticket[]
+}
+
+model ContactSubmission {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  message   String
+  createdAt DateTime @default(now())
+}
+
+model PageView {
+  id              String   @id @default(cuid())
+  path            String
+  referrer        String?
+  userAgent       String?
+  ip              String?
+  country         String?
+  device          String?  // desktop, mobile, tablet
+  browser         String?
+  os              String?  // Windows, macOS, iOS, Android, Linux
+  screenResolution String? // e.g., "1920x1080"
+  sessionId       String
+  createdAt       DateTime @default(now())
+  
+  @@index([sessionId])
+  @@index([createdAt])
+  @@index([country])
+  @@index([path])
+}
+
+model ClickEvent {
+  id        String   @id @default(cuid())
+  element   String   // button, link, etc.
+  elementId String?  // specific ID or class
+  path      String
+  sessionId String
+  createdAt DateTime @default(now())
+}
+
+model Error {
+  id            String   @id @default(cuid())
+  message       String
+  stackTrace    String?
+  sourceFile    String?
+  sourceLine    Int?
+  sourceColumn  Int?
+  errorType     String   // React Error, JavaScript Error, etc.
+  severity      String   @default("medium") // low, medium, high, critical
+  pageUrl       String
+  sessionId     String
+  userId        String?
+  browser       String?
+  os            String?
+  device        String?
+  country       String?
+  userAgent     String?
+  ip            String?
+  occurrences   Int      @default(1)
+  affectedUsers Int      @default(1)
+  firstSeen     DateTime @default(now())
+  lastSeen      DateTime @default(now())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Ticket {
+  id                      String        @id @default(cuid())
+  ticketNumber            String        @unique // TKT-2026-ABC123
+  status                  String        @default("open") // open, replied, closed, archived
+  priority                String        @default("normal") // low, normal, high, urgent
+  
+  // Contact form info
+  customerName            String
+  customerEmail           String
+  initialMessage          String
+  
+  // Assignment
+  assignedTo              String?       // Admin ID
+  assignedToUser          Admin?        @relation(fields: [assignedTo], references: [id])
+  
+  // Email tracking
+  automatedReplyMessageId String?       // Gmail message ID of automated reply
+  lastCustomerEmail       DateTime?      // Last time customer replied
+  lastTeamReply           DateTime?      // Last time team replied
+  
+  // Lifecycle
+  createdAt               DateTime       @default(now())
+  closedAt                DateTime?
+  expiresAt               DateTime       // Auto-close after 7 days of inactivity
+  
+  // Relations
+  emailThread             EmailMessage[]
+  
+  @@index([ticketNumber])
+  @@index([status])
+  @@index([customerEmail])
+  @@index([expiresAt])
+  @@index([assignedTo])
+}
+
+model EmailMessage {
+  id              String   @id @default(cuid())
+  ticketId        String
+  ticket          Ticket   @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  
+  // Gmail info
+  gmailMessageId  String   @unique
+  threadId        String?  // Gmail thread ID
+  
+  // Email details
+  from            String
+  to              String
+  subject         String
+  body            String
+  isFromCustomer  Boolean  // true = customer, false = team
+  
+  // Status
+  forwardedToTeam Boolean  @default(false)
+  forwardedTo     String[] // Array of email addresses it was forwarded to
+  
+  createdAt       DateTime @default(now())
+  
+  @@index([ticketId])
+  @@index([gmailMessageId])
+  @@index([isFromCustomer])
+}
+
+model WebVital {
+  id        String   @id @default(cuid())
+  sessionId String
+  path      String
+  metric    String   // 'lcp', 'inp', 'cls', 'ttfb', 'fcp', 'tbt'
+  value     Float    // The actual metric value
+  rating    String   // 'good', 'needs-improvement', 'poor'
+  device    String?
+  browser   String?
+  country   String?
+  createdAt DateTime @default(now())
+  
+  @@index([sessionId])
+  @@index([path])
+  @@index([metric])
+  @@index([createdAt])
+  @@index([rating])
+}
+
+model DailyAnalyticsSummary {
+  id              String   @id @default(cuid())
+  date            DateTime @unique // Just the date (time set to 00:00:00)
+  totalPageViews  Int      @default(0)
+  uniqueVisitors  Int      @default(0)
+  avgSessionDuration Int    @default(0) // in seconds
+  bounceRate      Float    @default(0)
+  conversionRate  Float    @default(0)
+  // Web Vitals averages
+  avgLCP          Float?
+  avgINP          Float?
+  avgCLS          Float?
+  avgTTFB         Float?
+  avgFCP          Float?
+  avgTBT          Float?
+  // Distributions (stored as JSON or separate fields)
+  lcpGood         Int      @default(0)
+  lcpNeedsImprovement Int  @default(0)
+  lcpPoor         Int      @default(0)
+  inpGood         Int      @default(0)
+  inpNeedsImprovement Int  @default(0)
+  inpPoor         Int      @default(0)
+  clsGood         Int      @default(0)
+  clsNeedsImprovement Int  @default(0)
+  clsPoor         Int      @default(0)
+  createdAt       DateTime @default(now())
+  
+  @@index([date])
+}
+
+model IPCountryCache {
+  id        String   @id @default(cuid())
+  ip        String   @unique
+  country   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@index([ip])
+}
+
+model SiteSettings {
+  id                    String    @id @default(cuid())
+  maintenanceEnabled    Boolean   @default(false)
+  maintenanceEta        DateTime?
+  maintenanceMessage    String?
+  contactEmail          String?
+  announcementEnabled   Boolean   @default(false)
+  announcementText      String?
+  contactFormDisabled   Boolean   @default(false)
+  faqsDisabled          Boolean   @default(false)
+  bulkArchiveDays       Int       @default(90) // Days after which to bulk archive closed tickets
+  updatedAt             DateTime  @updatedAt
+}

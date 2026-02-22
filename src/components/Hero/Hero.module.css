@@ -1,0 +1,367 @@
+.hero {
+    padding: 8rem 2rem 4rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.title {
+    font-size: 5rem;
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    margin-bottom: 1.5rem;
+    color: var(--foreground);
+}
+
+.gradientText {
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    display: inline-block;
+    isolation: isolate;
+}
+
+.gradientText::before,
+.gradientText::after {
+    content: 'IGNITE.';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: inherit;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    opacity: 0.8;
+}
+
+
+.gradientText::after {
+    animation: glitch-anim-1 6s infinite linear alternate-reverse;
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+    transform: translate(-4px, 0);
+    z-index: -1;
+}
+
+.gradientText::before {
+    animation: glitch-anim-2 6s infinite linear alternate-reverse;
+    clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+    transform: translate(4px, 0);
+    z-index: -2;
+}
+
+@keyframes glitch-anim-1 {
+
+    0%,
+    90% {
+        clip-path: inset(0 0 0 0);
+        transform: translate(0);
+        opacity: 0;
+    }
+
+    91% {
+        clip-path: inset(20% 0 80% 0);
+        transform: translate(-4px, 2px);
+        opacity: 0.8;
+    }
+
+    92% {
+        clip-path: inset(60% 0 10% 0);
+        transform: translate(4px, -2px);
+        opacity: 0.8;
+    }
+
+    94% {
+        clip-path: inset(40% 0 50% 0);
+        transform: translate(-4px, 2px);
+        opacity: 0.8;
+    }
+
+    96% {
+        clip-path: inset(80% 0 5% 0);
+        transform: translate(4px, -2px);
+        opacity: 0.8;
+    }
+
+    98% {
+        clip-path: inset(10% 0 70% 0);
+        transform: translate(-4px, 2px);
+        opacity: 0.8;
+    }
+
+    99% {
+        clip-path: inset(30% 0 20% 0);
+        transform: translate(4px, -2px);
+        opacity: 0.8;
+    }
+
+    100% {
+        clip-path: inset(0 0 0 0);
+        transform: translate(0);
+        opacity: 0;
+    }
+}
+
+@keyframes glitch-anim-2 {
+
+    0%,
+    90% {
+        clip-path: inset(0 0 0 0);
+        transform: translate(0);
+        opacity: 0;
+    }
+
+    91% {
+        clip-path: inset(10% 0 60% 0);
+        transform: translate(4px, -2px);
+        opacity: 0.8;
+    }
+
+    92% {
+        clip-path: inset(30% 0 20% 0);
+        transform: translate(-4px, 2px);
+        opacity: 0.8;
+    }
+
+    94% {
+        clip-path: inset(70% 0 20% 0);
+        transform: translate(4px, -2px);
+        opacity: 0.8;
+    }
+
+    96% {
+        clip-path: inset(20% 0 60% 0);
+        transform: translate(-4px, 2px);
+        opacity: 0.8;
+    }
+
+    98% {
+        clip-path: inset(50% 0 30% 0);
+        transform: translate(4px, -2px);
+        opacity: 0.8;
+    }
+
+    99% {
+        clip-path: inset(0% 0 80% 0);
+        transform: translate(-4px, 2px);
+        opacity: 0.8;
+    }
+
+    100% {
+        clip-path: inset(0 0 0 0);
+        transform: translate(0);
+        opacity: 0;
+    }
+}
+
+.subtitle {
+    font-size: 1.25rem;
+    color: #555;
+    max-width: 600px;
+    margin: 0 auto 3rem;
+    line-height: 1.6;
+}
+
+.rotatingText {
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    transform: translateY(2px);
+}
+
+/* Blue box container for rotating text - inline styles override this */
+.rotatingText .rotating-text-box {
+    background: linear-gradient(135deg, #1A73E8 0%, #93C5FD 90%);
+    color: white;
+    padding: 0.15rem 0.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 12px rgba(26, 115, 232, 0.3);
+    margin: 0 0.25rem;
+}
+
+.rotatingText .rotating-text-box>span {
+    color: white !important;
+    background: transparent !important;
+    -webkit-text-fill-color: white !important;
+}
+
+.ctaButton {
+    background: var(--primary-gradient);
+    color: white;
+    padding: 1rem 3rem;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    box-shadow: 0 10px 30px rgba(26, 115, 232, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.ctaButton::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.ctaButton:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.ctaButton:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 40px rgba(26, 115, 232, 0.5);
+}
+
+.trustedWrapper {
+    margin-top: 6rem;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    overflow: hidden;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.trustedLabel {
+    font-size: 0.8rem;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-weight: 600;
+    position: relative;
+    top: 0%;
+    left: 1%;
+}
+
+.marqueeContainer {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.marqueeTrack {
+    display: flex;
+    width: max-content;
+    animation: scroll 200s linear infinite;
+    will-change: transform;
+}
+
+.logoItem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 70px;
+    opacity: 0.9;
+    transition: opacity 0.3s, transform 0.3s;
+    margin-right: 5rem;
+    flex-shrink: 0;
+}
+
+.logoItem:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.logoItem img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+    filter: none;
+    transition: transform 0.3s;
+}
+
+.logoItem:hover img {
+    filter: none;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.puzzleLetter {
+    display: inline-block;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.puzzleLetter:hover {
+    transform: scale(1.1);
+    color: var(--primary);
+}
+
+.letterHighlight {
+    animation: letterPulse 0.5s ease;
+    color: var(--primary);
+    text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+}
+
+@keyframes letterPulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@media (max-width: 768px) {
+    .title {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .subtitle {
+        font-size: 1rem;
+        max-width: 100%;
+        padding: 0 0.25rem;
+    }
+
+    .rotatingText {
+        max-width: calc(100vw - 3rem);
+        overflow: visible;
+    }
+
+    /* Force the blue box not to overflow — override inline style */
+    .rotatingText :global(.rotating-text-box) {
+        max-width: calc(100vw - 3rem) !important;
+        white-space: normal !important;
+    }
+}

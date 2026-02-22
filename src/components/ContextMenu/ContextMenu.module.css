@@ -1,0 +1,66 @@
+/* Override PrimeReact ContextMenu styles - clean modern design with dark theme */
+:global(.dark-context-menu.p-contextmenu) {
+    background: #2a2a2a !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 0.75rem !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+    padding: 0.375rem !important;
+    min-width: 180px !important;
+}
+
+:global(.dark-context-menu .p-menuitem) {
+    margin: 0.125rem 0 !important;
+    border-radius: 0.5rem !important;
+}
+
+:global(.dark-context-menu .p-menuitem:first-child) {
+    margin-top: 0 !important;
+}
+
+:global(.dark-context-menu .p-menuitem:last-child) {
+    margin-bottom: 0 !important;
+}
+
+:global(.dark-context-menu .p-menuitem-link) {
+    color: white !important;
+    padding: 0.625rem 0.875rem !important;
+    border-radius: 0.5rem !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+    transition: background-color 0.15s ease !important;
+    text-decoration: none !important;
+}
+
+:global(.dark-context-menu .p-menuitem-link:hover) {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+}
+
+:global(.dark-context-menu .p-menuitem-link:active) {
+    background: rgba(255, 255, 255, 0.15) !important;
+}
+
+:global(.dark-context-menu .p-menuitem-icon) {
+    color: #aaa !important;
+    margin-right: 0 !important;
+    width: 16px !important;
+    height: 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+}
+
+:global(.dark-context-menu .p-menuitem-text) {
+    color: white !important;
+    font-size: 0.875rem !important;
+    font-weight: 400 !important;
+    line-height: 1.5 !important;
+}
+
+:global(.dark-context-menu .p-menuitem-separator) {
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+    margin: 0.375rem 0.5rem !important;
+    height: 1px !important;
+}
