@@ -21,9 +21,6 @@ export default function RotatingText({
 }: RotatingTextProps) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const containerRef = useRef<HTMLSpanElement>(null);
-    const textRef = useRef<HTMLSpanElement>(null);
-    const boxRef = useRef<HTMLSpanElement>(null);
-    const [boxWidth, setBoxWidth] = useState<number | "auto">("auto");
 
     useEffect(() => {
         if (words.length === 0) return;
@@ -74,31 +71,6 @@ export default function RotatingText({
 
     const currentWord = words[currentIndex];
 
-    // Measure box width for smooth animation
-    useEffect(() => {
-        // Use a small delay to ensure text is rendered
-        const timeout = setTimeout(() => {
-            if (textRef.current && boxRef.current) {
-                // Measure the text width
-                const textWidth = textRef.current.offsetWidth;
-
-                // Get computed padding from the box
-                const box = boxRef.current;
-                const computedStyle = window.getComputedStyle(box);
-                const paddingLeft = parseFloat(computedStyle.paddingLeft) || 0;
-                const paddingRight = parseFloat(computedStyle.paddingRight) || 0;
-
-                // Calculate total width including padding
-                const totalWidth = textWidth + paddingLeft + paddingRight;
-
-                // Add a small buffer to ensure text doesn't get cut off
-                setBoxWidth(totalWidth + 2);
-            }
-        }, 100);
-
-        return () => clearTimeout(timeout);
-    }, [currentIndex, words, currentWord]);
-
     return (
         <span
             ref={containerRef}
@@ -114,11 +86,8 @@ export default function RotatingText({
         >
             {baseText && <span>{baseText}{separator}</span>}
             <motion.span
-                ref={boxRef}
+                layout="size"
                 className="rotating-text-box"
-                animate={{
-                    width: boxWidth === "auto" ? "auto" : `${boxWidth}px`
-                }}
                 style={{
                     display: "inline-block",
                     background: "linear-gradient(135deg, #1A73E8 0%, #93C5FD 90%)",
@@ -127,44 +96,27 @@ export default function RotatingText({
                     borderRadius: "0.5rem",
                     boxShadow: "0 4px 12px rgba(26, 115, 232, 0.3)",
                     margin: "0 0.25rem",
-                    textAlign: "left",
+                    textAlign: "center",
                     position: "relative",
                     overflow: "hidden",
-                    transform: "translateY(-1px)",
+                    transform: "translateZ(0)", /* Force GPU acceleration */
+                    willChange: "width, transform",
                     whiteSpace: "nowrap"
                 }}
                 transition={{
-                    width: {
-                        duration: 1.0,
-                        ease: [0.4, 0, 0.2, 1]
-                    }
+                    layout: { type: "spring", stiffness: 300, damping: 30 }
                 }}
             >
-                <span
-                    ref={textRef}
-                    style={{
-                        display: "inline-block",
-                        whiteSpace: "nowrap",
-                        color: "white",
-                        background: "transparent",
-                        WebkitTextFillColor: "white",
-                        position: "absolute",
-                        visibility: "hidden",
-                        top: 0,
-                        left: 0
-                    }}
-                >
-                    {currentWord}
-                </span>
                 <span style={{
                     display: "inline-block",
                     whiteSpace: "nowrap",
                     color: "white",
                     background: "transparent",
                     WebkitTextFillColor: "white",
-                    position: "relative"
+                    position: "relative",
+                    transform: "translateZ(0)" /* Force GPU acceleration */
                 }}>
-                    <AnimatePresence mode="wait" initial={false}>
+                    <AnimatePresence mode="wait">
                         <motion.span
                             key={currentIndex}
                             initial={transitionType === "reactbits" ? { opacity: 0 } : getInitialState(transitionType)}
@@ -176,10 +128,8 @@ export default function RotatingText({
                             }}
                             exit={transitionType === "reactbits" ? { opacity: 0 } : getExitState(transitionType)}
                             transition={{
-                                duration: transitionType === "reactbits" ? 0.4 : 0.5,
-                                ease: [0.4, 0, 0.2, 1],
-                                opacity: { duration: 0.2 },
-                                y: { duration: 0.4, ease: [0.4, 0, 0.2, 1] }
+                                duration: transitionType === "reactbits" ? 0.3 : 0.4, /* Sped up slightly for mobile */
+                                ease: "easeOut"
                             }}
                         >
                             {currentWord}
